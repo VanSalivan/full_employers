@@ -45,10 +45,10 @@ const login = async (req, res) => {
 @access Public
 */
 const register = async (req, res) => {
-  const { email, password, name } = req;
+  const { email, password, name } = req.body;
 
   if (!email || !password || !name) {
-    return res.send(400).json({ message: "Заполните обязательные поля" });
+    return res.status(400).json({ message: "Заполните обязательные поля" });
   }
   // Проверка на наличие пользователя в базе данных
   const registerUser = await prisma.user.findFirst({
