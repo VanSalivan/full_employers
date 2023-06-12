@@ -87,8 +87,14 @@ const register = async (req, res) => {
     return res.status(400).json({ message: "Не удалось создать пользователя" });
   }
 };
+
+/** 
+@route GET api/user/current
+@desc Текуший пользователь
+@access Private
+*/
 const current = async (req, res) => {
-  res.send("current");
+  return res.status(200).json(req.user);
 };
 
 module.exports = {
