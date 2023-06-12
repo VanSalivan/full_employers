@@ -2,6 +2,8 @@ const { prisma } = require("../prisma/prisma-client");
 const brypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+const secret = process.env.JWT_SECRET;
+
 /** 
 @route POST api/user/login
 @desc Логин
@@ -25,12 +27,12 @@ const login = async (req, res) => {
   const isPasswordCorrect =
     user && (await brypt.compare(password, user.password));
 
-  if (user && isPasswordCorrect) {
+  if (user && isPasswordCorrect && secret) {
     res.status(200).json({
       id: user.id,
       email: user.email,
       name: user.name,
-      // выдавать токен
+      token: jwt.sign({ id: user.id }, secret, { expiresIn: "30d" }),
     });
   } else {
     return res.status(400).json({
@@ -73,8 +75,6 @@ const register = async (req, res) => {
       password: hashedPassord,
     },
   });
-
-  const secret = process.env.JWT_SECRET;
 
   if (user && secret) {
     res.status(201).json({
