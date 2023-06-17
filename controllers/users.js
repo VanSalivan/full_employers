@@ -40,7 +40,7 @@ const login = async (req, res) => {
       });
     }
   } catch {
-    res.status(400).json({ message: "что-то пошло не так" });
+    res.status(500).json({ message: "что-то пошло не так" });
   }
 };
 
@@ -93,7 +93,7 @@ const register = async (req, res) => {
         .json({ message: "Не удалось создать пользователя" });
     }
   } catch {
-    res.status(400).json({ message: "что-то пошло не так" });
+    res.status(500).json({ message: "что-то пошло не так" });
   }
 };
 
